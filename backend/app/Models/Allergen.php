@@ -10,7 +10,7 @@ class Allergen extends Model
     use HasFactory;
     protected $guarded =  [];
 
-    public function Product(){
+    public function product(){
         return $this->belongsTo(Product::class);
 
     }
