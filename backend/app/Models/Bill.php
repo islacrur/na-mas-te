@@ -13,4 +13,7 @@ class Bill extends Model
     public function user(){
         return $this-> belongsTo(User::class); 
     }
+    public function product_bill(){
+        return $this-> hasOne(Product_Bill::class); 
+    }
 }
