@@ -17,9 +17,9 @@ return new class extends Migration
             $table->text('description');
             $table->double('price');
             $table->binary('image')->nullable();
-            $table->unsignedInteger('id_allergen');
+            $table->unsignedBigInteger('id_allergen');
             $table->enum('status', ['available', 'not_available']);
-            $table->unsignedInteger('id_category');
+            $table->unsignedBigInteger('id_category');
             $table->timestamps();
 
             $table->foreign('id_allergen')->references('id')->on('allergens');
