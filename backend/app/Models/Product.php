@@ -10,15 +10,15 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function Stock(){
+    public function stock(){
         return $this-> hasOne(Stock::class); 
     }
 
-    public function Allergen(){
+    public function allergen(){
         return $this-> hasMany(Allergen::class); 
     }
 
-    public function Category(){
+    public function category(){
         return $this-> belongsTo(Category::class); 
     }
 }
