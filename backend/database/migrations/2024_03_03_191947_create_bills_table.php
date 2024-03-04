@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->biginteger('units');
             $table->double('total_sale_price');
-            $table->date('date');
+            $table->date('sale_date');
             $table->unsignedBigInteger('id_user');
             $table->timestamps();
             
