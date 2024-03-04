@@ -18,8 +18,9 @@ return new class extends Migration
             $table->double('price');
             $table->binary('image')->nullable();
             $table->unsignedBigInteger('id_allergen');
-            $table->enum('status', ['available', 'not_available']);
+            $table->enum('status', ['available', 'not_available'])->default('available');
             $table->unsignedBigInteger('id_category');
+            $table->tinyInteger('stock')->unsigned();
             $table->timestamps();
 
             $table->foreign('id_allergen')->references('id')->on('allergens');
