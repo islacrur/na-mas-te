@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('allergens', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->binary('chip_image')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('allergens')) {
+            Schema::create('allergens', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->binary('chip_image')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

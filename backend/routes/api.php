@@ -14,4 +14,4 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::apiResource('/products', ProductController::class);
+Route::resource('/product', ProductController::class);
