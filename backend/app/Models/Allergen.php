@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Allergen extends Model
 {
     use HasFactory;
-    protected $guarded =  [];
+    protected $guarded = [];
 
-    public function product(){
-        return $this->belongsTo(Product::class);
-
+    public function products(){
+        return $this->belongsToMany(Product::class);
     }
 }
