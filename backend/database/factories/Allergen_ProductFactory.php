@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AllergenProduct>
  */
-class AllergenProductFactory extends Factory
+class Allergen_ProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class AllergenProductFactory extends Factory
     {
         return [
           'id_allergen' => $this->faker->numberBetween(1, 14),
-          'id_product' => $this->faker->numberBetween(1, 100),
+          'id_product' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
