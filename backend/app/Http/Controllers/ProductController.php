@@ -17,28 +17,24 @@ class ProductController extends Controller
     }
 
 
-    public function store(ProductRequest $request): JsonResponse
+    public function store(ProductRequest $request):JsonResponse
     {
-        $product = Product::create($request->except('allergens'));
-        $product->allergens()->sync($request->allergens);
+        $product = new Product;
+        $product -> name = $request -> name;
+        $product -> description = $request -> description;
+        $product -> price = $request -> price;
+        $product -> image = $request -> image;
+        $product -> status = $request -> status;
+        $product -> id_category = $request -> id_category;
+        $product -> stock = $request -> stock;
 
+        $product->save();
+        
         return response()->json([
             'success' => true,
             'data' => $product
         ], 201);
     }
-
-    // public function store(ProductRequest $request):JsonResponse
-    // {
-    //     $product = new Product;
-    //     $product -> name = $request -> name;
-    //     $product ->save();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'data' => $product
-    //     ], 201);
-    // }
 
     public function show(string $id):JsonResponse
     {
@@ -53,7 +49,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->image = $request->image;
-        $product->allergen = $request->allergen;
+        // $product->allergen = $request->allergen;
         $product->status = $request->status;
         $product->category = $request->category;
         $product->stock = $request->stock;
