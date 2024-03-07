@@ -17,13 +17,11 @@ return new class extends Migration
             $table->text('description');
             $table->double('price');
             $table->binary('image')->nullable();
-            $table->unsignedBigInteger('id_allergen');
             $table->enum('status', ['available', 'not_available'])->default('available');
             $table->unsignedBigInteger('id_category');
             $table->tinyInteger('stock')->unsigned();
             $table->timestamps();
 
-            $table->foreign('id_allergen')->references('id')->on('allergens');
             $table->foreign('id_category')->references('id')->on('categories');
         });
     }

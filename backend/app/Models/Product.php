@@ -10,12 +10,11 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
-
-    public function allergen(){
-        return $this-> hasMany(Allergen::class); 
+    public function allergens_products(){
+        return $this->hasMany(Allergen_Product::class);
     }
-
+   
     public function category(){
-        return $this-> belongsTo(Category::class); 
+        return $this->belongsTo(Category::class); 
     }
 }

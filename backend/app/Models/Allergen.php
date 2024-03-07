@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Allergen_Product;
+
+
 class Allergen extends Model
 {
     use HasFactory;
-    protected $guarded =  [];
+    protected $guarded = [];
 
-    public function product(){
-        return $this->belongsTo(Product::class);
-
+    public function allergens_products(){
+        return $this->hasMany(Allergen_Product::class);
     }
+
 }

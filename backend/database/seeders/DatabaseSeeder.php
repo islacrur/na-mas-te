@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             UserSeeder::class,
             BillSeeder::class,
+            AllergenProductSeeder::class,
         ]);
     }
 }
