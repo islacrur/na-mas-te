@@ -11,11 +11,9 @@ class ProductController extends Controller
 {
     public function index():JsonResponse
     {
-       //$products = Product::all();
-        return response()->json(Product::all(), 200);
-
+        $products = Product::all();
+        return response()->json($products, 200);
     }
-
 
     public function store(ProductRequest $request):JsonResponse
     {
@@ -27,19 +25,22 @@ class ProductController extends Controller
         $product -> status = $request -> status;
         $product -> id_category = $request -> id_category;
         $product -> stock = $request -> stock;
-
         $product->save();
         
         return response()->json([
             'success' => true,
             'data' => $product
         ], 201);
-    }
+}
 
     public function show(string $id):JsonResponse
     {
         $product = Product::find($id);
-        return response()->json($product, 200);
+
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+            return response()->json($product, 200);
     }
 
     public function update(ProductRequest $request, string $id):JsonResponse
