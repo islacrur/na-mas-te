@@ -50,7 +50,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->image = $request->image;
         $product->status = $request->status;
-        $product->category = $request->category;
+        $product->id_category = $request->id_category;
         $product->stock = $request->stock;
         $product->save();
 

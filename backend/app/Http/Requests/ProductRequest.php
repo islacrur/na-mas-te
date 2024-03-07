@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
             'name' => 'required|max:255|min:3',
             'description' => 'required|max:255|min:15',
             'price' => 'required|numeric|min:1|max:999.99',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
             'allergens' => 'sometimes|array',
             'allergens.*' => 'integer|exists:allergens,id',
             'status' => 'required|in:available,not_available',
