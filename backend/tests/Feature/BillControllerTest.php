@@ -35,7 +35,7 @@ class BillControllerTest extends TestCase
         'id_product' => $product->id,
         'units' => 1,
     ]);
-    if ($response->getStatusCode() === 200) {
+    if ($response->getStatusCode() === 201) {
         $this->assertDatabaseHas('products_bills', [
             'id_bill' => Bill::latest()->first()->id,
             'id_product' => $product->id,
@@ -45,7 +45,7 @@ class BillControllerTest extends TestCase
 
    public function test_view_cart()
    {
-    $bill = Bill::latest()->first()->id;
+    $bill = Bill::latest()->first();
 
     if (!$bill) {
         throw new \Exception('Not found.');
