@@ -4,10 +4,10 @@ function Router() {
   return (
     <BrowserRouter>
     <Routes>
-        <Route></Route>
-        <Route></Route>
-        <Route></Route>
-        <Route></Route>
+        <Route path="/" element={<Landing/>}></Route>
+        <Route path="/home" element={<Home/>}></Route>
+        <Route path="/allproducts" element={<AllProducts/>}></Route>
+        <Route path="/product" element={<Product/>}></Route>
     </Routes>
 </BrowserRouter>
   )

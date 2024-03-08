@@ -1,10 +1,12 @@
 import './App.css'
-import { Button } from 'flowbite-react';
+import Router from './configuration/Router.jsx';
 
-export default function MyPage() {
+function App() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <>
+      <Router/>
+   </>
   );
-  }
+}
+
+export default App;
