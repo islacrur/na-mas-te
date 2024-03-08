@@ -62,7 +62,7 @@ class BillControllerTest extends TestCase
         $response->assertJsonFragment([
             'product_name' => $productBill->product->name,
             'quantity' => $productBill->units,
-            //'subtotal' => $productBill->units * $productBill->total_sale_price,
+            'subtotal' => $productBill->units * $productBill->total_sale_price,
         ]);
     }
    }
