@@ -86,4 +86,19 @@ class ProductControllerTest extends TestCase
 
     }
     
+    public function test_delete_an_existing_product(): void
+    {
+        $faker = Faker::create();
+        $response = Product::create([
+                'name' => $faker->name,
+                'description' => 'This is a test product.',
+                'price' => 19.99,
+                'status' => 'available',
+                'id_category' => 2,
+                'stock' => 10,
+        ]);
+
+        $response = $this->delete("/api/product/{$response->id}");
+        $response->assertStatus(200);
+    }
 }
