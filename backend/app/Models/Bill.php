@@ -9,11 +9,7 @@ class Bill extends Model
 {
     use HasFactory; 
     protected $guarded = [];
-
-    public function user(){
-        return $this-> belongsTo(User::class); 
-    }
-    public function product_bill(){
-        return $this-> hasOne(Product_Bill::class); 
+    public function productBill(){
+        return $this->hasMany(Product_Bill::class, 'bill_id'); 
     }
 }

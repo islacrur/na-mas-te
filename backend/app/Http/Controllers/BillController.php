@@ -10,24 +10,20 @@ class BillController extends Controller
 {
 public function addToCart(Request $request)
 {
-    // Valida la solicitud.
     $validatedData = $request->validate([
         'id_product' => 'required|exists:products,id',
         'units' => 'required|integer|min:1',
     ]);
 
-    // Busca el producto.
     $product = Product::find($validatedData['id_product']);
 
-    // Crea una nueva factura o encuentra la última factura creada.
-    $bill = Bill::latest()->firstOrCreate([
+    $bill = Bill::create([
         'units' => $validatedData['units'],
         'total_sale_price' => $product->price * $validatedData['units'],
         'sale_date' => now(),
     ]);
 
-    // Crea una nueva Product_Bill.
-    $productBill = $bill->product_bill()->create([
+    $productBill = $bill->productBill()->create([
         'id_product' => $product->id,
         'units' => $validatedData['units'],
         'price' => $product->price,
@@ -39,20 +35,27 @@ public function addToCart(Request $request)
 
 public function confirmCart(Request $request)
 {
-    // Valida la solicitud.
     $validatedData = $request->validate([
         'id_bill' => 'required|exists:bills,id',
-        // Aquí puedes agregar validaciones para los datos del usuario.
     ]);
 
-    // Busca la factura.
     $bill = Bill::find($validatedData['id_bill']);
 
-    // Actualiza la factura con los datos del usuario.
     $bill->update([
-        // Aquí puedes actualizar los campos de la factura con los datos del usuario.
     ]);
 
     return response()->json($bill, 200);
+}
+public function viewCart()
+{
+    $bill = Bill::latest()->first();
+
+    if (!$bill) {
+        return response()->json('El carrito de compras está vacío');
+    }
+
+    $products = $bill->productBill()->with('product')->get();
+
+    return response()->json($products);
 }
 }

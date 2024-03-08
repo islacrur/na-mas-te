@@ -18,14 +18,13 @@ use App\Http\Controllers\BillController;
 
 // Route::resource('/product', ProductController::class);
 
-
-Route::controller(ProductController::class)->group(function(){
-    Route::get('/', 'index');
-    Route::post('/product', 'store');
-    Route::get('/product/{id}', 'show');
-    Route::put('/product/{id}', 'update');
-    Route::delete('/product/{id}', 'destroy');
-
-    Route::post('/cart/add', [BillController::class, 'addToCart']);
-    Route::get('/cart/view', [BillController::class, 'viewCart']);
+Route::group([], function(){
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/product', [ProductController::class, 'store']);
+    Route::get('/product/{id}', [ProductController::class, 'show']);
+    Route::put('/product/{id}', [ProductController::class, 'update']);
+    Route::delete('/product/{id}', [ProductController::class, 'destroy']);
 });
+
+Route::post('/cart/add', [BillController::class, 'addToCart']);
+Route::get('/cart/view', [BillController::class, 'viewCart']);

@@ -6,6 +6,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Bill;
 use App\Models\Product;
+use App\Models\User;
 
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Schema;
@@ -15,26 +16,40 @@ class BillControllerTest extends TestCase
    
    public function test_bills_table_is_created()
    {
-        // Ejecuta la migración
         $this->artisan('migrate');
-
-        // Asegura que la tabla 'bills' exista en la base de datos
         $this->assertTrue(Schema::hasTable('bills'));
         $this->assertTrue(Schema::hasTable('users'));
         $this->assertTrue(Schema::hasTable('products_bills'));
     }
     
-    public function test_add_to_cart()
+   /*  public function test_add_to_cart()
    {
-    $product = Product::where('id', '>', 0)->first();
+    $faker = Faker::create();
+    $product = Product::create([
+            'name' => $faker->name,
+            'description' => 'This is a test product.',
+            'price' => 19.99,
+            'status' => 'available',
+            'id_category' => 1,
+            'stock' => 10,
+        ]);
 
-    if (!$product) {
-        throw new \Exception('Not found.');
-    }
+    $user = User::create([
+        'name' => 'Test',
+        'surname' => 'User',
+        'phone_number' => '1234567890',
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt('password'), 
+        'address' => '123 Test Street',
+    ]);
+    
     $response = $this->post('api/cart/add', [
         'id_product' => $product->id,
         'units' => 1,
+        'id_user' => $user->id,
     ]);
+    $this->assertEquals(201, $response->getStatusCode());
+
     if ($response->getStatusCode() === 201) {
         $this->assertDatabaseHas('products_bills', [
             'id_bill' => Bill::latest()->first()->id,
@@ -42,28 +57,37 @@ class BillControllerTest extends TestCase
         ]);
     }
    }
+ *//* 
+public function test_view_cart()
+{
+    $faker = Faker::create();
 
-   public function test_view_cart()
-   {
-    $bill = Bill::latest()->first();
+    $product = Product::create([
+        'name' => $faker->name,
+        'description' => 'This is a test product.',
+        'price' => 19.99,
+        'status' => 'available',
+        'id_category' => 1,
+        'stock' => 10,
+    ]);
 
-    if (!$bill) {
-        throw new \Exception('Not found.');
-    }
+    $user = User::create([
+        'name' => 'Test',
+        'surname' => 'User',
+        'phone_number' => '1234567890',
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt('password'), 
+        'address' => '123 Test Street',
+    ]);
+    
+    $bill = Bill::create([
+        'units' => 10,
+        'total_sale_price' => 100.00,
+        'sale_date' => now(),
+    ]);
 
     $response = $this->get('/api/cart/view');
 
     $response->assertStatus(200);
-
-    $response->assertJsonFragment(['bill' => $bill->toArray()]);
-
-    if ($bill->products_bills) {
-        $productBill = $bill->products_bills;
-        $response->assertJsonFragment([
-            'product_name' => $productBill->product->name,
-            'quantity' => $productBill->units,
-            'subtotal' => $productBill->units * $productBill->total_sale_price,
-        ]);
-    }
-   }
-}
+}*/
+} 

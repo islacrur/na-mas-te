@@ -20,7 +20,7 @@ class BillFactory extends Factory
             'units' => $this->faker->randomNumber(1, 20),
             'total_sale_price' => $this->faker->randomFloat(2, 1, 100),
             'sale_date' => $this->faker->dateTimeThisMonth(),
-            'id_user' => $this->faker->numberBetween(1, 6),
+            //'id_user' => $this->faker->numberBetween(1, 6),
         ];
     }
-}
+} 
