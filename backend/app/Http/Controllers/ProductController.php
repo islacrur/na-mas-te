@@ -11,14 +11,14 @@ class ProductController extends Controller
 {
     public function index():JsonResponse
     {
-       //$products = Product::all();
-        return response()->json(Product::all(), 200);
-
+        $products = Product::all();
+        return response()->json($products, 200);
     }
-
 
     public function store(ProductRequest $request):JsonResponse
     {
+        try {
+
         $product = new Product;
         $product -> name = $request -> name;
         $product -> description = $request -> description;
@@ -27,46 +27,63 @@ class ProductController extends Controller
         $product -> status = $request -> status;
         $product -> id_category = $request -> id_category;
         $product -> stock = $request -> stock;
-
         $product->save();
         
         return response()->json([
             'success' => true,
             'data' => $product
         ], 201);
-    }
+
+        } catch(\Exception $e){
+            return response()->json(['error' => 'Failed to store product'], 500);
+        }
+}
 
     public function show(string $id):JsonResponse
     {
         $product = Product::find($id);
-        return response()->json($product, 200);
+
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+            return response()->json($product, 200);
     }
 
     public function update(ProductRequest $request, string $id):JsonResponse
     {
-        $product = Product::find($id);
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->image = $request->image;
-        $product->status = $request->status;
-        $product->id_category = $request->id_category;
-        $product->stock = $request->stock;
-        $product->save();
+        try {
+            $product = Product::find($id);
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->image = $request->image;
+            $product->status = $request->status;
+            $product->id_category = $request->id_category;
+            $product->stock = $request->stock;
+            $product->save();
 
         return response()->json([
             'success' => true,
             'data' => $product
         ], 200);
 
+        }  catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to update product'], 500);
+        }
     }
-
-    public function destroy(string $id):JsonResponse
+    public function destroy(string $id): JsonResponse
     {
-        Product::find($id)->delete();
-        return response()->json([
-            'success' => true
-        ], 200);
+        try {
+            $product = Product::find($id);
+            if (!$product) {
+                return response()->json(['error' => 'Product not found'], 404);
+            }
+            $product->delete();
+            return response()->json([
+                'success' => true
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete product'], 500);
+        }
     }
-
 }
