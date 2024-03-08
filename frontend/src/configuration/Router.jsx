@@ -1,4 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Landing from '../Pages/Landing';
+import Home from '../Pages/Home';
+import AllProducts from '../Pages/AllProducts';
+import Product from '../Pages/Product';
 
 function Router() {
   return (
