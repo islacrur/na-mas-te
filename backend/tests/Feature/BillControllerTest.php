@@ -2,92 +2,71 @@
 
 namespace Tests\Feature;
 
-// use App\Http\Controllers\ProductController;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Bill;
 use App\Models\Product;
-use App\Models\User;
-
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\Schema;
 
 class BillControllerTest extends TestCase
 {
-   
-   public function test_bills_table_is_created()
-   {
-        $this->artisan('migrate');
-        $this->assertTrue(Schema::hasTable('bills'));
-        $this->assertTrue(Schema::hasTable('users'));
-        $this->assertTrue(Schema::hasTable('products_bills'));
+    use RefreshDatabase;
+
+    public function testIndex()
+    {
+        $response = $this->getJson('/api/bills');
+
+        $response->assertStatus(200);
     }
-    
-   /*  public function test_add_to_cart()
-   {
-    $faker = Faker::create();
-    $product = Product::create([
-            'name' => $faker->name,
-            'description' => 'This is a test product.',
-            'price' => 19.99,
-            'status' => 'available',
-            'id_category' => 1,
-            'stock' => 10,
-        ]);
 
-    $user = User::create([
-        'name' => 'Test',
-        'surname' => 'User',
-        'phone_number' => '1234567890',
-        'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('password'), 
-        'address' => '123 Test Street',
-    ]);
-    
-    $response = $this->post('api/cart/add', [
-        'id_product' => $product->id,
-        'units' => 1,
-        'id_user' => $user->id,
-    ]);
-    $this->assertEquals(201, $response->getStatusCode());
+    public function testStore()
+    {
+        $product = Product::factory()->create();
 
-    if ($response->getStatusCode() === 201) {
-        $this->assertDatabaseHas('products_bills', [
-            'id_bill' => Bill::latest()->first()->id,
+        $response = $this->postJson('/api/bills', [
             'id_product' => $product->id,
+            'units' => 1,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'bill' => [
+                'id', 'units', 'total_sale_price', 'sale_date'
+            ],
+            'productBill' => [
+                'id', 'id_product', 'units', 'price'
+            ]
         ]);
     }
-   }
- *//* 
-public function test_view_cart()
-{
-    $faker = Faker::create();
 
-    $product = Product::create([
-        'name' => $faker->name,
-        'description' => 'This is a test product.',
-        'price' => 19.99,
-        'status' => 'available',
-        'id_category' => 1,
-        'stock' => 10,
-    ]);
+    public function testShow()
+    {
+        $bill = Bill::factory()->create();
 
-    $user = User::create([
-        'name' => 'Test',
-        'surname' => 'User',
-        'phone_number' => '1234567890',
-        'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('password'), 
-        'address' => '123 Test Street',
-    ]);
-    
-    $bill = Bill::create([
-        'units' => 10,
-        'total_sale_price' => 100.00,
-        'sale_date' => now(),
-    ]);
+        $response = $this->getJson("/api/bills/{$bill->id}");
 
-    $response = $this->get('/api/cart/view');
+        $response->assertStatus(200);
+    }
 
-    $response->assertStatus(200);
-}*/
-} 
+    public function testUpdate()
+    {
+        $bill = Bill::factory()->create();
+        $product = Product::factory()->create();
+
+        $response = $this->putJson("/api/bills/{$bill->id}", [
+            'id_product' => $product->id,
+            'units' => 2,
+        ]);
+
+        $response->assertStatus(200);
+    }
+
+    public function testDestroy()
+    {
+        $bill = Bill::factory()->create();
+
+        $response = $this->deleteJson("/api/bills/{$bill->id}");
+
+        $response->assertStatus(200);
+    }
+}
