@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react';
 import namasteShortLogo from "../../../assets/img/namasteShortLogo.png"
+import '../../../../node_modules/flowbite/dist/flowbite.css';
 
 const Navbar = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
 
     <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
