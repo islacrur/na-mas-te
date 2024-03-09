@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import namasteShortLogo from "../../../assets/img/namasteShortLogo.png"
-import '../../../../node_modules/flowbite/dist/flowbite.css';
+import { Dropdown } from 'flowbite';
 
 const Navbar = () => {
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
 
