@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product_Bill extends Model
 {
-    use HasFactory;
+      use HasFactory;
     protected $guarded = [];
+    protected $table = 'product_bills'; 
 
     public function product(){
         return $this->belongsTo(Product::class); 

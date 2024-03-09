@@ -26,5 +26,6 @@ Route::group([], function(){
     Route::delete('/product/{id}', [ProductController::class, 'destroy']);
 });
 
+Route::apiResource('bills', BillController::class);
 Route::post('/cart/add', [BillController::class, 'addToCart']);
 Route::get('/cart/view', [BillController::class, 'viewCart']);
