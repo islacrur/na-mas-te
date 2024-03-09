@@ -18,22 +18,21 @@ class ProductControllerTest extends TestCase
     }
     
     public function test_store_new_product(): void
-    {
-        $this->seed(CategorySeeder::class);
-        $faker = Faker::create();
-        $id_category = Category::first()->id;
+{
+    $faker = Faker::create();
+    $id_category = Category::first()->id;
 
-        $response = $this->post('api/product', [
-            'name' => $faker->name,
-            'description' => 'This is a test product.',
-            'price' => 19.99,
-            'status' => 'available',
-            'id_category' => $id_category,
-            'stock' => 10,
-        ]);
-        
-        $response->assertStatus(201);
-    }
+    $response = $this->post('api/product', [
+        'name' => $faker->name,
+        'description' => 'This is a test product.',
+        'price' => 19.99,
+        'status' => 'available',
+        'id_category' => $id_category,
+        'stock' => 10,
+    ]);
+    
+    $response->assertStatus(201);
+}
     
     public function test_index_get_all_products(): void
     { 
