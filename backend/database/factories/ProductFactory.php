@@ -16,15 +16,16 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+         $categoryIds = \App\Models\Category::pluck('id')->toArray();
+
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->randomNumber(2, 1, 50),
             'image' => $this->faker->image('public/storage/images',640,480, null, false),
-            //'id_allergen_product' => $this->faker->numberBetween(1, 14),
             'status' => $this->faker->randomElement(['available', 'not_available']),
-           'id_category' => $this->faker->numberBetween(1, 4),
-           'stock' => $this->faker->numberBetween(0, 100),
+            'id_category' => $this->faker->randomElement($categoryIds),
+            'stock' => $this->faker->numberBetween(0, 100),
         ];
     }
 }
