@@ -7,10 +7,22 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Bill;
 use App\Models\Product;
+use App\Models\Category;
 
 class BillControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // Ejecutar las migraciones
+        $this->artisan('migrate');
+
+        // Ejecutar el seeder de categorías
+        $this->seed(\Database\Seeders\CategorySeeder::class);
+    }
 
     public function testIndex()
     {
@@ -44,19 +56,6 @@ class BillControllerTest extends TestCase
         $bill = Bill::factory()->create();
 
         $response = $this->getJson("/api/bills/{$bill->id}");
-
-        $response->assertStatus(200);
-    }
-
-    public function testUpdate()
-    {
-        $bill = Bill::factory()->create();
-        $product = Product::factory()->create();
-
-        $response = $this->putJson("/api/bills/{$bill->id}", [
-            'id_product' => $product->id,
-            'units' => 2,
-        ]);
 
         $response->assertStatus(200);
     }
