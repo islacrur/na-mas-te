@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product_Bill extends Model
 {
-    use HasFactory;
+      use HasFactory;
     protected $guarded = [];
+    protected $table = 'product_bills'; 
 
     public function product(){
-        return $this-> hasMany(Product::class); 
+        return $this->belongsTo(Product::class); 
     }
 
     public function bill(){
-        return $this-> hasOne(Bill::class); 
+        return $this->belongsTo(Bill::class); 
     }
 
 }

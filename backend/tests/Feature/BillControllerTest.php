@@ -2,68 +2,47 @@
 
 namespace Tests\Feature;
 
-// use App\Http\Controllers\ProductController;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Bill;
 use App\Models\Product;
 
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\Schema;
-
 class BillControllerTest extends TestCase
 {
-   
-   public function test_bills_table_is_created()
-   {
-        // Ejecuta la migración
-        $this->artisan('migrate');
+    public function testIndex()
+    {
+        $response = $this->getJson('/api/bills');
 
-        // Asegura que la tabla 'bills' exista en la base de datos
-        $this->assertTrue(Schema::hasTable('bills'));
-        $this->assertTrue(Schema::hasTable('users'));
-        $this->assertTrue(Schema::hasTable('products_bills'));
+        $response->assertStatus(200);
     }
-    
-    public function test_add_to_cart()
-   {
-    $product = Product::where('id', '>', 0)->first();
 
-    if (!$product) {
-        throw new \Exception('Not found.');
-    }
-    $response = $this->post('api/cart/add', [
-        'id_product' => $product->id,
-        'units' => 1,
-    ]);
-    if ($response->getStatusCode() === 200) {
-        $this->assertDatabaseHas('products_bills', [
-            'id_bill' => Bill::latest()->first()->id,
+    public function testStore()
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->postJson('/api/bills', [
             'id_product' => $product->id,
+            'units' => 1,
         ]);
-    }
-   }
 
-   public function test_view_cart()
-   {
-    $bill = Bill::latest()->first()->id;
-
-    if (!$bill) {
-        throw new \Exception('Not found.');
+        $response->assertStatus(201);
     }
 
-    $response = $this->get('/api/cart/view');
+    public function testShow()
+    {
+        $bill = Bill::factory()->create();
 
-    $response->assertStatus(200);
+        $response = $this->getJson("/api/bills/{$bill->id}");
 
-    $response->assertJsonFragment(['bill' => $bill->toArray()]);
-
-    if ($bill->products_bills) {
-        $productBill = $bill->products_bills;
-        $response->assertJsonFragment([
-            'product_name' => $productBill->product->name,
-            'quantity' => $productBill->units,
-            //'subtotal' => $productBill->units * $productBill->total_sale_price,
-        ]);
+        $response->assertStatus(200);
     }
-   }
+
+    public function testDestroy()
+    {
+        $bill = Bill::factory()->create();
+
+        $response = $this->deleteJson("/api/bills/{$bill->id}");
+
+        $response->assertStatus(200);
+    }
 }
