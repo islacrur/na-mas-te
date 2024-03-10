@@ -11,7 +11,7 @@ const Landing = () => {
       <Link to="/home">
         <img src={mandalabutton} className="h-80 m-3" alt="Mandala background" />
       </Link>
-      <h2>Relájate y disfruta d eun momento de deleite</h2>
+      <h2>Relájate y disfruta de un momento de deleite</h2>
     </div>
     </>
   )
