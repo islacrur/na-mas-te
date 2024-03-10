@@ -6,8 +6,8 @@ const Home = () => {
   return (
     <>
     <Navbar/>
-    <h1>Página Home</h1>
-    <Categories></Categories>
+    <h1>Esta es la home</h1>
+    <Categories/>
     <Footer/>
     </>
   )
