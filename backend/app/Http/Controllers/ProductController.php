@@ -85,5 +85,5 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to delete product'], 500);
         }
-    }
+    } 
 }
