@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types'; // Importa PropTypes
 
 const ProductCard = ({ product }) => {
   const [imageUrl, setImageUrl] = useState(null);
@@ -43,6 +44,15 @@ const ProductCard = ({ product }) => {
       </div>
     </div>
   );
+};
+
+// Define la validación de props utilizando PropTypes
+ProductCard.propTypes = {
+  product: PropTypes.shape({
+    image: PropTypes.string.isRequired, // Asegúrate de que 'image' sea requerido y de tipo 'string'
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+  }).isRequired
 };
 
 export default ProductCard;

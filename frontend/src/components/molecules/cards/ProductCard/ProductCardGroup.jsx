@@ -7,13 +7,19 @@ const ProductCardGroup = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getProducts("http://127.0.0.1:8000/api/")
-      .then((data) => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts("http://127.0.0.1:8000/api/");
         console.log("Data from API:", data);
         setProducts(data);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, []);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchProducts(); // Llamada a la función dentro de useEffect
+
+  }, [getProducts]); // Agrega getProducts como dependencia
 
   console.log("Products:", products); // Aquí
 

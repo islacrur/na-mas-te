@@ -1,14 +1,15 @@
 export const useCard = () => {
-  const getProducts = (endpoint) => {
-    return fetch(endpoint).then((response) => {
+  const getProducts = async (endpoint) => {
+    try {
+      const response = await fetch(endpoint);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response.json().catch((error) => {
-        console.error("Error parsing JSON:", error);
-        throw new Error("Invalid JSON response");
-      });
-    });
+      return response.json();
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw new Error("Failed to fetch products");
+    }
   };
 
   // Devuelve un objeto que contiene getProducts
