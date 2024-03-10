@@ -1,5 +1,5 @@
 import Navbar from '../components/molecules/navbar/Navbar';
-import CategoryCard from '../components/molecules/cards/CategoryCard/CategoryCard'
+import Categories from '../components/molecules/cards/categories/Categories';
 import Footer from '../components/molecules/footer/Footer';
 
 const Home = () => {
@@ -7,10 +7,7 @@ const Home = () => {
     <>
     <Navbar/>
     <h1>Página Home</h1>
-    <CategoryCard></CategoryCard>
-    <CategoryCard></CategoryCard>
-    <CategoryCard></CategoryCard>
-    <CategoryCard></CategoryCard>
+    <Categories></Categories>
     <Footer/>
     </>
   )
